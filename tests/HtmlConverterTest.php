@@ -278,4 +278,9 @@ class HtmlConverterTest extends \PHPUnit_Framework_TestCase
         $result = $markdown->convert($htmlH4);
         $this->assertEquals($htmlH4, $result);
     }
+
+		public function test_square_brackets_escaped() 
+		{
+				$this->html_gives_markdown("<a href='http://www.heise.de/newsticker/meldung/NSA-Skandal-Snowden-Doku-Citizenfour-mit-Oscar-ausgezeichnet-2557279.html' target='_blank'>NSA-Skandal: Snowden-Doku 'Citizenfour' mit Oscar ausgezeichnet</a><blockquote>23.02.2015 07:07 Bei der Oscar-Verleihung ist der Dokumentarfilm 'Citizenfour' &uuml;ber die NSA-Enth&uuml;llungen des Edward Snowden als bester Dokumentarfilm ausgezeichnet worden.</blockquote>", "[NSA-Skandal: Snowden-Doku 'Citizenfour' mit Oscar ausgezeichnet](http://www.heise.de/newsticker/meldung/NSA-Skandal-Snowden-Doku-Citizenfour-mit-Oscar-ausgezeichnet-2557279.html)\n> 23.02.2015 07:07 Bei der Oscar-Verleihung ist der Dokumentarfilm 'Citizenfour' über die NSA-Enthüllungen des Edward Snowden als bester Dokumentarfilm ausgezeichnet worden.", array("hard_break" => true));
+		}
 }

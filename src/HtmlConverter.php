@@ -96,6 +96,7 @@ class HtmlConverter
         }
 
         $document = $this->createDOMDocument($html);
+				$document = $this->sanitizeBlockQuote($document);
 
         // Work on the entire DOM tree (including head and body)
         if (!($root = $document->getElementsByTagName('html')->item(0))) {
@@ -135,6 +136,24 @@ class HtmlConverter
 
         return $document;
     }
+
+    /**
+     * @param \DOMDocument
+     *
+     * @return \DOMDocument
+     */
+		private function sanitizeBlockQuote($dom_document)
+		{
+			$blockquotes = $dom_document->getElementsByTagName('blockquote');
+			foreach ($blockquotes as $bq) {
+				if (!preg_match('/\r|\n/', substr($bq->previousSibling->textContent, 2))) {
+					$prev = $bq->previousSibling;
+					$bq->parentNode->insertBefore($dom_document->createElement('br'), $bq);
+				}
+			}
+
+			return $dom_document;
+		}
 
     /**
      * Convert Children
